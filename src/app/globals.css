@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --pitch: #0b0f0d;
+  --surface: #131a16;
+  --surface-2: #1b241e;
+  --line: #263029;
+  --green: #35c97a;
+  --green-dim: #1f7a49;
+  --gold: #e8b923;
+  --optimus: #ff6b4a;
+  --text: #e7ede9;
+  --text-muted: #8ca396;
+
+  --font-display: var(--font-anton);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jbmono);
+}
+
+@theme inline {
+  --color-pitch: var(--pitch);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-green: var(--green);
+  --color-green-dim: var(--green-dim);
+  --color-gold: var(--gold);
+  --color-optimus: var(--optimus);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  background: var(--pitch);
+  color: var(--text);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--green);
+  color: var(--pitch);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
