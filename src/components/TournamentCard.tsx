@@ -46,6 +46,7 @@ export function TournamentCard({
         return;
       }
       onJoined(data.new_balance);
+      fetch(`/api/tournaments/${tournament.id}/check-bracket`, { method: 'POST' });
     });
   }
 
