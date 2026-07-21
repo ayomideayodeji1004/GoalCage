@@ -1,11 +1,29 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+
+const ADMIN_EMAIL = 'your-email@example.com'; // replace with your real GoalCage login email
 
 export default function AdminMatchesPage() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient(); // not async, unlike server.ts
+  const [authorized, setAuthorized] = useState(false);
+  const supabase = createClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    async function checkAuth() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || user.email !== ADMIN_EMAIL) {
+        router.push('/dashboard');
+        return;
+      }
+      setAuthorized(true);
+      loadMatches();
+    }
+    checkAuth();
+  }, []);
 
   async function loadMatches() {
     setLoading(true);
@@ -18,10 +36,6 @@ export default function AdminMatchesPage() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    loadMatches();
-  }, []);
-
   async function pickWinner(matchId, winnerId) {
     const res = await fetch(`/api/matches/${matchId}/report`, {
       method: 'POST',
@@ -33,6 +47,7 @@ export default function AdminMatchesPage() {
     loadMatches();
   }
 
+  if (!authorized) return <div>Checking access...</div>;
   if (loading) return <div>Loading matches...</div>;
 
   return (
