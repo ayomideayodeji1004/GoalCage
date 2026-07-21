@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
-const ADMIN_EMAIL = 'your-email@example.com'; // replace with your real GoalCage login email
+const ADMIN_EMAIL = 'ayomideayodeji1004@gmail.com'; // replace with your real GoalCage login email
 
 export default function AdminMatchesPage() {
   const [matches, setMatches] = useState([]);
