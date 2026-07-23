@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
+export const dynamic = 'force-dynamic';
 
 const anton = Anton({
   variable: "--font-anton",
