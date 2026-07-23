@@ -139,11 +139,11 @@ $$;
 
 -- ============ SEED DATA ============
 insert into public.tournaments (name, tier, entry_fee, prize_pool, max_players) values
-  ('Lagos Bronze Cage', 'bronze', 20, 200, 12),
-  ('Ketu Bronze Cage', 'bronze', 20, 200, 12),
-  ('Ogun Silver Cage', 'silver', 50, 500, 12),
-  ('Ikeja Gold Cage', 'gold', 100, 1000, 12),
-  ('Lagos Platinum Cage', 'platinum', 200, 2000, 16),
-  ('Naija Diamond Cage', 'diamond', 400, 4000, 16),
+  ('Bronze Cage', 'bronze', 20, 200, 12),
+  ('Bronze Cage', 'bronze', 20, 200, 12),
+  ('Silver Cage', 'silver', 50, 500, 12),
+  ('Gold Cage', 'gold', 100, 1000, 12),
+  ('Platinum Cage', 'platinum', 200, 2000, 16),
+  ('Diamond Cage', 'diamond', 400, 4000, 16),
   ('Optimus Championship', 'optimus', 1000, 12000, 16)
 on conflict do nothing;
