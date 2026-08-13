@@ -465,3 +465,21 @@ begin
   end if;
 end;
 $$;
+create or replace function get_tournament_players(p_tournament_id uuid)
+returns table (
+  user_id uuid,
+  username text,
+  joined_at timestamptz
+)
+language sql
+security definer
+as $$
+  select
+    te.user_id,
+    p.username,
+    te.created_at as joined_at
+  from public.tournament_entries te
+  join public.profiles p on p.id = te.user_id
+  where te.tournament_id = p_tournament_id
+  order by te.created_at asc;
+$$;
