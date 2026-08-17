@@ -477,9 +477,9 @@ as $$
   select
     te.user_id,
     p.username,
-    te.created_at as joined_at
+    te.joined_at
   from public.tournament_entries te
   join public.profiles p on p.id = te.user_id
   where te.tournament_id = p_tournament_id
-  order by te.created_at asc;
+  order by te.joined_at asc;
 $$;
