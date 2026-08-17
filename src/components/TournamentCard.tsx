@@ -1,5 +1,6 @@
 "use client";
 
+import { ParticipantsList } from "./participantslist";
 import { useState, useTransition } from "react";
 import { tierInfo } from "@/lib/tiers";
 import { createClient } from "@/lib/supabase/client";
@@ -28,6 +29,7 @@ export function TournamentCard({
   const tier = tierInfo(tournament.tier);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [showPlayers, setShowPlayers] = useState(false);
 
   const full = tournament.players_joined >= tournament.max_players;
   const canAfford = balance >= tournament.entry_fee;
@@ -73,6 +75,14 @@ export function TournamentCard({
         <span className="font-mono text-[11px] text-text-muted whitespace-nowrap pt-1">
           {tournament.players_joined}/{tournament.max_players} in
         </span>
+        <button
+          onClick={() => setShowPlayers(!showPlayers)}
+          className="text-[10px] text-text-muted underline"
+        >
+          {showPlayers ? "Hide players" : "View players"}
+        </button>
+
+        {showPlayers && <ParticipantsList tournamentId={tournament.id} />}
       </div>
 
       <div className="flex items-center justify-between font-mono text-sm">
