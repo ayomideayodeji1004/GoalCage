@@ -12,7 +12,7 @@ export default async function RosterPage({
   params: { id: string }
   searchParams: { tier?: string }
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const activeTier = TIERS.includes(searchParams.tier as Tier)
     ? (searchParams.tier as Tier)
     : null
