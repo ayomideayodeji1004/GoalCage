@@ -1,6 +1,14 @@
 import { TIERS, tierIndex } from "@/lib/tiers";
 
-export function TierLadder({ currentTier }: { currentTier: string }) {
+export function TierLadder({
+  currentTier,
+  selectedTier,
+  onSelectTier,
+}: {
+  currentTier: string;
+  selectedTier: string | null;
+  onSelectTier: (tier: string | null) => void;
+}) {
   const activeIndex = tierIndex(currentTier);
 
   return (
@@ -9,13 +17,17 @@ export function TierLadder({ currentTier }: { currentTier: string }) {
         {TIERS.map((tier, i) => {
           const reached = i <= activeIndex;
           const isCurrent = i === activeIndex;
+          const isSelected = selectedTier === tier.key;
           return (
-            <div
+            <button
               key={tier.key}
-              className="relative flex-1 flex items-center justify-center transition-colors"
+              onClick={() => onSelectTier(isSelected ? null : tier.key)}
+              className="relative flex-1 flex items-center justify-center transition-colors cursor-pointer"
               style={{
                 background: reached ? tier.color : "var(--surface)",
                 opacity: reached ? 1 : 0.4,
+                outline: isSelected ? "2px solid white" : "none",
+                outlineOffset: "-2px",
               }}
               title={tier.label}
             >
@@ -32,7 +44,7 @@ export function TierLadder({ currentTier }: { currentTier: string }) {
               >
                 {tier.label.slice(0, 3)}
               </span>
-            </div>
+            </button>
           );
         })}
       </div>
