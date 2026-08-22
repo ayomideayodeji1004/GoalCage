@@ -7,9 +7,11 @@ import { CoinBalance } from "./CoinBalance";
 export function TournamentList({
   initialTournaments,
   initialBalance,
+  playerTier,
 }: {
   initialTournaments: Tournament[];
   initialBalance: number;
+  playerTier: string;
 }) {
   const [tournaments, setTournaments] = useState(initialTournaments);
   const [balance, setBalance] = useState(initialBalance);
@@ -41,6 +43,7 @@ export function TournamentList({
             key={t.id}
             tournament={t}
             balance={balance}
+            playerTier={playerTier}
             onJoined={(newBalance) => handleJoined(t.id, newBalance)}
           />
         ))}
