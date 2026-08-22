@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { TierLadder } from "@/components/TierLadder";
-import { TournamentList } from "@/components/TournamentList";
+import { CageFloor } from "@/components/CageFloor";
 import type { Tournament } from "@/components/TournamentCard";
 
 export default async function DashboardPage() {
@@ -51,15 +50,8 @@ export default async function DashboardPage() {
         </h1>
       </div>
 
-      <div className="mb-10">
-        <TierLadder currentTier={profile?.tier ?? "bronze"} />
-      </div>
-
-      <div className="mb-4 hidden sm:flex items-center justify-between">
-        <h2 className="font-display text-2xl">Open cages</h2>
-      </div>
-
-      <TournamentList
+      <CageFloor
+        playerTier={profile?.tier ?? "bronze"}
         initialTournaments={tournaments}
         initialBalance={profile?.cage_coins ?? 0}
       />
