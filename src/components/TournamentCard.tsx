@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { ParticipantsList } from "./participantslist";
 import { useState, useTransition } from "react";
 import { tierInfo } from "@/lib/tiers";
@@ -81,7 +81,21 @@ export function TournamentCard({
         >
           {showPlayers ? "Hide players" : "View players"}
         </button>
+        <button
+          onClick={() => setShowPlayers(!showPlayers)}
+          className="text-[10px] text-text-muted underline"
+        >
+          {showPlayers ? "Hide players" : "View players"}
+        </button>
 
+        <Link
+          href={`/tournaments/${tournament.id}/roster`}
+          className="text-[10px] text-text-muted underline"
+        >
+          Full roster
+        </Link>
+
+        {showPlayers && <ParticipantsList tournamentId={tournament.id} />}
         {showPlayers && <ParticipantsList tournamentId={tournament.id} />}
       </div>
 
