@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
+
 import { ParticipantsList } from "./participantslist";
 import { useState, useTransition } from "react";
-import { tierInfo } from "@/lib/tiers";
+import { tierInfo, tierIndex } from "@/lib/tiers";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 
 export type Tournament = {
   id: string;
@@ -20,10 +21,12 @@ export type Tournament = {
 export function TournamentCard({
   tournament,
   balance,
+  playerTier,
   onJoined,
 }: {
   tournament: Tournament;
   balance: number;
+  playerTier: string;
   onJoined: (newBalance: number) => void;
 }) {
   const tier = tierInfo(tournament.tier);
@@ -33,8 +36,9 @@ export function TournamentCard({
 
   const full = tournament.players_joined >= tournament.max_players;
   const canAfford = balance >= tournament.entry_fee;
+  const tierLocked = tierIndex(tournament.tier) > tierIndex(playerTier);
   const disabled =
-    tournament.already_joined || full || !canAfford || tournament.status !== "open";
+    tournament.already_joined || full || !canAfford || tierLocked || tournament.status !== "open";
 
   function handleJoin() {
     setError(null);
@@ -54,6 +58,7 @@ export function TournamentCard({
 
   let buttonLabel = "Join cage";
   if (tournament.already_joined) buttonLabel = "Entered";
+  else if (tierLocked) buttonLabel = `Reach ${tier.label} first`;
   else if (full) buttonLabel = "Full";
   else if (!canAfford) buttonLabel = "Not enough coins";
   else if (isPending) buttonLabel = "Joining…";
@@ -81,7 +86,7 @@ export function TournamentCard({
         >
           {showPlayers ? "Hide players" : "View players"}
         </button>
-        
+
         <Link
           href={`/tournaments/${tournament.id}/roster`}
           className="text-[10px] text-text-muted underline"
