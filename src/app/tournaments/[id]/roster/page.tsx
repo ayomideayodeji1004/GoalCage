@@ -17,21 +17,20 @@ export default async function RosterPage({
 
   const supabase = await createClient()
   const activeTier = TIERS.includes(tier as Tier) ? (tier as Tier) : null
-
   let query = supabase
-    .from('tournament_entries')
-    .select(`
+  .from('tournament_entries')
+  .select(`
+    id,
+    joined_at,
+    profiles!user_id${activeTier ? '!inner' : ''} (
       id,
-      joined_at,
-      profiles!user_id (
-        id,
-        username,
-        tier,
-        cage_coins
-      )
-    `)
-    .eq('tournament_id', id)
-    .order('joined_at', { ascending: true })
+      username,
+      tier,
+      cage_coins
+    )
+  `)
+  .eq('tournament_id', id)
+  .order('joined_at', { ascending: true })
 
   if (activeTier) {
     query = query.eq('profiles.tier', activeTier)
