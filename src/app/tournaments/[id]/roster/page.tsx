@@ -9,13 +9,14 @@ export default async function RosterPage({
   params,
   searchParams,
 }: {
-  params: { id: string }
-  searchParams: { tier?: string }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ tier?: string }>
 }) {
+  const { id } = await params
+  const { tier } = await searchParams
+
   const supabase = await createClient()
-  const activeTier = TIERS.includes(searchParams.tier as Tier)
-    ? (searchParams.tier as Tier)
-    : null
+  const activeTier = TIERS.includes(tier as Tier) ? (tier as Tier) : null
 
   let query = supabase
     .from('tournament_entries')
@@ -29,7 +30,7 @@ export default async function RosterPage({
         cage_coins
       )
     `)
-    .eq('tournament_id', params.id)
+    .eq('tournament_id', id)
     .order('joined_at', { ascending: true })
 
   if (activeTier) {
